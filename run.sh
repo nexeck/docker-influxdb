@@ -23,7 +23,15 @@ cat ${CONFIG_FILE}
 echo "=> Starting InfluxDB ..."
 exec /opt/influxdb/influxd -config=${CONFIG_FILE} &
 
-sleep 10
+#wait for the startup of influxdb
+RET=1
+while [[ RET -ne 0 ]]; do
+    echo "=> Waiting for confirmation of InfluxDB service startup ..."
+    sleep 3
+    curl -k ${API_URL}/ping 2> /dev/null
+    RET=$?
+done
+echo ""
 
 ADMIN_USER=${INFLUXDB_ADMIN_USER:-root}
 ADMIN_PASS=${INFLUXDB_ADMIN_PASS:-root}
