@@ -23,6 +23,8 @@ cat ${CONFIG_FILE}
 echo "=> Starting InfluxDB ..."
 exec /opt/influxdb/influxd -config=${CONFIG_FILE} &
 
+sleep 10
+
 ADMIN_USER=${INFLUXDB_ADMIN_USER:-root}
 ADMIN_PASS=${INFLUXDB_ADMIN_PASS:-root}
 echo "=> Creating admin user"
