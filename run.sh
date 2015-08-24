@@ -23,4 +23,9 @@ cat ${CONFIG_FILE}
 echo "=> Starting InfluxDB ..."
 exec /opt/influxdb/influxd -config=${CONFIG_FILE} &
 
+ADMIN_USER=${INFLUXDB_ADMIN_USER:-root}
+ADMIN_PASS=${INFLUXDB_ADMIN_PASS:-root}
+echo "=> Creating admin user"
+/opt/influxdb/influx -host=${INFLUX_HOST} -port=${INFLUX_API_PORT} -execute="CREATE USER ${ADMIN_USER} WITH PASSWORD '${ADMIN_PASS}' WITH ALL PRIVILEGES"
+
 fg
